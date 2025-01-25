@@ -1,34 +1,18 @@
 package com.turkcell.turkcellcqrs.application.book.command.create;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.UUID;
 
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreatedBookResponse
 {
     private UUID id;
     private String name;
-
-    public CreatedBookResponse(UUID id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public CreatedBookResponse() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
