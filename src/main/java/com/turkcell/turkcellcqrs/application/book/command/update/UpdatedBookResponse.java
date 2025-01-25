@@ -1,25 +1,16 @@
-package com.turkcell.turkcellcqrs.domain.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.UuidGenerator;
+package com.turkcell.turkcellcqrs.application.book.command.update;
 
 import java.util.UUID;
 
-@Entity
-@Table(name="books")
-public class Book {
-    @UuidGenerator
-    @Id
+public class UpdatedBookResponse
+{
     private UUID id;
-
     private String name;
 
-    public Book() {
+    public UpdatedBookResponse() {
     }
 
-    public Book(UUID id, String name) {
+    public UpdatedBookResponse(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
