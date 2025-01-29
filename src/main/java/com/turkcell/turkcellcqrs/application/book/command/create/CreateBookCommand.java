@@ -1,6 +1,7 @@
 package com.turkcell.turkcellcqrs.application.book.command.create;
 
 import an.awesome.pipelinr.Command;
+import com.turkcell.turkcellcqrs.core.pipelines.auth.AuthenticatedRequest;
 import com.turkcell.turkcellcqrs.domain.entity.Book;
 import com.turkcell.turkcellcqrs.persistence.book.BookRepository;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import lombok.*;
 
 @Getter
 @Setter
-public class CreateBookCommand implements Command<CreatedBookResponse>
+public class CreateBookCommand implements Command<CreatedBookResponse>, AuthenticatedRequest
 {
     private String name;
 
