@@ -28,12 +28,10 @@ public class AuthenticationBehavior implements Command.Middleware {
                                         .stream()
                                         .anyMatch(req -> req.equalsIgnoreCase(role.getAuthority()))
                         );
-                // Admin, ADMİN, admin
                 if(!hasRequiredRoles)
                     throw new RuntimeException("You dont have the required roles");
             }
         }
-
 
         return next.invoke();
     }
