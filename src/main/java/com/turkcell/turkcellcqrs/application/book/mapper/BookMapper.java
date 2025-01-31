@@ -13,6 +13,7 @@ public interface BookMapper {
 
     // Target fonksiyon_ismi(Source s);
     // @Mapping(target = "name",source = "title")
+    @Mapping(target="author.id", source="authorId")
     Book convertCreateCommandToBook(CreateBookCommand command);
 
     CreatedBookResponse convertBookToCreateBookResponse(Book book);

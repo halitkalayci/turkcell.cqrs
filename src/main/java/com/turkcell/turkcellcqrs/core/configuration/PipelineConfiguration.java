@@ -17,3 +17,4 @@ public class PipelineConfiguration {
                 .with(middlewares::orderedStream);
     }
 }
+// Dockerize
