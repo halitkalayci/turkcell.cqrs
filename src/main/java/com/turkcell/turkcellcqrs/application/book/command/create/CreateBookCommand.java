@@ -5,11 +5,14 @@ import com.turkcell.turkcellcqrs.application.author.rules.AuthorBusinessRules;
 import com.turkcell.turkcellcqrs.application.author.service.AuthorService;
 import com.turkcell.turkcellcqrs.application.book.mapper.BookMapper;
 import com.turkcell.turkcellcqrs.core.pipelines.auth.AuthenticatedRequest;
+import com.turkcell.turkcellcqrs.core.pipelines.validation.SkipValidation;
 import com.turkcell.turkcellcqrs.domain.entity.Author;
 import com.turkcell.turkcellcqrs.domain.entity.Book;
 import com.turkcell.turkcellcqrs.persistence.book.BookRepository;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 import lombok.*;
 
@@ -17,10 +20,12 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CreateBookCommand implements Command<CreatedBookResponse>
+public class CreateBookCommand implements Command<CreatedBookResponse>, SkipValidation
 {
     @NotBlank
+    @Size(min=3)
     private String name;
+    @NotNull
     private UUID authorId;
 
     @Component

@@ -22,7 +22,6 @@ public class CreateAuthorCommand implements Command<CreatedAuthorResponse>
             implements Command.Handler<CreateAuthorCommand, CreatedAuthorResponse>
     {
         private final AuthorRepository authorRepository;
-
         @Override
         public CreatedAuthorResponse handle(CreateAuthorCommand createAuthorCommand) {
             AuthorMapper authorMapper = AuthorMapper.INSTANCE;
