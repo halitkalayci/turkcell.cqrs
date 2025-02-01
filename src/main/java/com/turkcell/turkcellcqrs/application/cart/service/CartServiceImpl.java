@@ -6,6 +6,8 @@ import com.turkcell.turkcellcqrs.persistence.cart.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
@@ -13,11 +15,20 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart createCartForStudent(Student student) {
-        // Business Rule -> Aynı student için 2. cart oluşmamalı.
-        //throw new RuntimeException("Bir hata..");
         Cart cart = new Cart();
         cart.setStudent(student);
         cartRepository.save(cart);
+        return cart;
+    }
+
+    @Override
+    public Cart getOrCreateCartForStudent(Student student) {
+        Cart cart = cartRepository.findByStudentId(student.getId()).orElse(null);
+
+        // Her cart kontrolünde yoksa oluşturmuş olacağım.
+        if(cart == null)
+            cart = this.createCartForStudent(student);
+
         return cart;
     }
 }

@@ -26,17 +26,13 @@ public class CreateStudentCommand implements Command<CreatedStudentResponse>
     {
         private final StudentRepository studentRepository;
         private final CartService cartService;
+        private final StudentMapper studentMapper;
 
         @Override
         @Transactional
         public CreatedStudentResponse handle(CreateStudentCommand createStudentCommand) {
-            // Transaction
-            StudentMapper studentMapper = StudentMapper.INSTANCE;
-
             Student student = studentMapper.createStudentFromCreateCommand(createStudentCommand);
             studentRepository.save(student);
-
-            // dış bağlantılar
             cartService.createCartForStudent(student);
             return studentMapper.createCreatedResponseFromStudent(student);
         }
