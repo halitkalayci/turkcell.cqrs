@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+// Refactorları yapalım.
+// * -> Order feature'ı geliştirmek. -> Sipariş -> Cart -> CartItems'in OrderItems'a transferi -> CartItems'ın silinmesi.
+// (Optional) -> JWT implementasyonu yapalım.
 @Getter
 @Setter
 public class CreateCartItemCommand implements Command<CreatedCartItemResponse>
