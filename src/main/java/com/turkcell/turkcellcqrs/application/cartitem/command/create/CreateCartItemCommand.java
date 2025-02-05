@@ -12,6 +12,7 @@ import com.turkcell.turkcellcqrs.persistence.cartitem.CartItemRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -19,13 +20,14 @@ import java.util.UUID;
 // Refactorları yapalım.
 // * -> Order feature'ı geliştirmek. -> Sipariş -> Cart -> CartItems'in OrderItems'a transferi -> CartItems'ın silinmesi.
 // (Optional) -> JWT implementasyonu yapalım.
+
+// Sipariş oluştuırulurken 5. itemda problem -> 5.
 @Getter
 @Setter
 public class CreateCartItemCommand implements Command<CreatedCartItemResponse>
 {
     private UUID bookId;
     private int quantity;
-    private UUID studentId; // JWT ile çalışmalı
 
     @Component
     @RequiredArgsConstructor
@@ -39,7 +41,8 @@ public class CreateCartItemCommand implements Command<CreatedCartItemResponse>
 
         @Override
         public CreatedCartItemResponse handle(CreateCartItemCommand createCartItemCommand) {
-            Student student = studentService.findStudentById(createCartItemCommand.getStudentId());
+            String studentId = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+            Student student = studentService.findStudentById(UUID.fromString(studentId));
             Cart cart = cartService.getOrCreateCartForStudent(student);
 
             CartItem cartItem = cart.getCartItems()

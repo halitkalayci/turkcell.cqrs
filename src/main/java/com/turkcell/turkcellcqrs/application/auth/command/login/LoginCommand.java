@@ -11,6 +11,9 @@ import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 public class LoginCommand implements Command<LoginCommandResponse>
@@ -27,6 +30,7 @@ public class LoginCommand implements Command<LoginCommandResponse>
         private final JwtService jwtService;
         @Override
         public LoginCommandResponse handle(LoginCommand loginCommand) {
+            // Refactor
             User user = userRepository.findByEmail(loginCommand.getEmail())
                     .orElseThrow(() -> new BusinessException("Bad credentials"));
 
@@ -34,8 +38,10 @@ public class LoginCommand implements Command<LoginCommandResponse>
             if(!isPasswordCorrect)
                 throw new BusinessException("Bad credentials");
 
-
-            return new LoginCommandResponse(jwtService.generateToken(user.getEmail()));
+            Map<String,Object> claims = new HashMap<>();
+            claims.put("id", user.getId());
+            String jwt = jwtService.generateToken(user.getEmail(), claims);
+            return new LoginCommandResponse(jwt);
         }
     }
 }

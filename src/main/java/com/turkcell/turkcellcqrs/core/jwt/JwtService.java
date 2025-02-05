@@ -75,6 +75,17 @@ public class JwtService
         return claims.get("roles", List.class);
     }
 
+    public String extractId(String token)
+    {
+        Claims claims = Jwts
+                .parser()
+                .verifyWith((SecretKey) getSignKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.get("id", String.class);
+    }
+
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64URL.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
